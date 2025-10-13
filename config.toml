@@ -1,0 +1,21 @@
+[general]
+log_level = "warning"
+log_location = "./log"
+console_output = false
+
+
+[mysql]
+host_address = "192.168.178.71"
+port_number = 3306
+username = "root"
+password = "fPNnSnzq"
+database = "rs_local_test"
+
+[serial]
+console_input = True
+port = /dev/ttyACM0
+# port = COM5
+baudrate = 9600
+bytesize = 8
+parity = N
+stopbits= 1
