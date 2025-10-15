@@ -77,18 +77,19 @@ try:
             continue
 
         line = receiver.read()
-        line = line.split(";")
-        channel = line[0]
-        first_timestamp = line[1]
-        last_timestamp = line[2]
-        count = line[3]
-        min = line[4]
-        mean = line[5]
-        max = line[6]
-
-        # TODO: write data to database
         
-        # database_caller.insertDataset(channel_identifier, timestamp, dataset)
+        # hdf;1760563031.63;1760563041.63;2025;9;8988;17871
+        
+        values = (
+            line[0],
+            float(line[1]),
+            float(line[2]),
+            int(line[3]),
+            int(line[4]),
+            int(line[5]),
+        )
+
+        database_caller.insertDataset(values)
         
 
 finally:

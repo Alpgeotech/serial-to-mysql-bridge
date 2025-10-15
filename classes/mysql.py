@@ -14,8 +14,7 @@ class MySql:
         self.password = mySqlSettingsDict["password"]
         self.database = mySqlSettingsDict["database"]
         self.connection = None
-        self.sample_id = 1
-        self.datagram_id = 1
+        self.message_id = 1
 
     def getConnectionState(self):
         return self.__connectionState
@@ -79,20 +78,16 @@ class MySql:
 
         return self.__connectionState, connectionStateChanged
 
-    def insertDataset(self, channel_identifier, timestamp, dataset):
-        for sample in dataset:
-            self.__insertSample(channel_identifier, timestamp, sample)
-        self.connection.commit()
-        self.datagram_id += 1
-
-    def __insertSample(self, channel_identifier, timestamp, sample):
-        insertSample = (
-            "INSERT INTO udp_data_ehz (sample_id_rs, datagram_id_rs, timestamp_rs, value) VALUES (%s, %s, %s, %s)"
+    def insertDataset(self, values):
+        insertMessage = (
+            "INSERT INTO serial_data_ehz (message_id_python, data_timestamp_first_sample, data_timestamp_last_sample, data_sample_count, data_min, data_mean, data_max) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         )
+        values = (self.message_id,) + values
         try:
-            logger.debug(self.dictCursor.mogrify(insertSample, (  self.sample_id, self.datagram_id, timestamp, sample, ) ))
-            self.dictCursor.execute(insertSample, (self.sample_id, self.datagram_id, timestamp, sample, ) )
-            self.sample_id += 1
+            logger.debug(self.dictCursor.mogrify(insertMessage, values ))
+            self.dictCursor.execute( insertMessage, values  )
+            self.connection.commit()
+            self.message_id += 1
             return True
         except Exception as err:
             self.connection.rollback()
