@@ -94,3 +94,4 @@ class MySql:
             logger.error("Failed to insert sample into database:")
             logger.error(err)
             return False
+ 

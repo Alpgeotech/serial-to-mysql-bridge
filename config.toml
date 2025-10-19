@@ -1,8 +1,7 @@
 [general]
-log_level = "warning"
+log_level = "info"
 log_location = "./log"
 console_output = false
-
 
 [mysql]
 host_address = "192.168.178.71"
@@ -12,10 +11,10 @@ password = "fPNnSnzq"
 database = "rs_local_test"
 
 [serial]
-console_input = True
-port = /dev/ttyUSB0
+console_input = true
+port = "/dev/ttyUSB0"
 # port = COM5
 baudrate = 9600
 bytesize = 8
-parity = N
+parity = "N"
 stopbits= 1

@@ -77,21 +77,21 @@ try:
             continue
 
         line = receiver.read()
-        
-        # hdf;1760563031.63;1760563041.63;2025;9;8988;17871
-        
-        values = (
-            line[0],
-            float(line[1]),
-            float(line[2]),
-            int(line[3]),
-            int(line[4]),
-            int(line[5]),
-        )
+        line = line.strip()
+        line = line.split(";")
 
-        database_caller.insertDataset(values)
+        if line[0] == "ehz":
+            values = (
+                float(line[1]),
+                float(line[2]),
+                int(line[3]),
+                int(line[4]),
+                int(line[5]),
+                int(line[6]),
+            )
+            database_caller.insertDataset(values)
         
-
+        
 finally:
     receiver.close()
     # transmitter.close()
